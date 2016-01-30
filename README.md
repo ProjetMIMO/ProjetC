@@ -1,7 +1,7 @@
 # ProjetC
-#include <stdio.h>
-#include <string.h>
-#define Non_trouve -1
+ #include <stdio.h>
+ #include <string.h>
+ #define Non_trouve -1
 
 void conv_maj(char chaine[]);
 int recherche(char nom_rech[]);
