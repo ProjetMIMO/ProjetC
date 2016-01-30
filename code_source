@@ -1,4 +1,3 @@
-# ProjetC
  #include <stdio.h>
  #include <string.h>
  #define Non_trouve -1
