@@ -1,0 +1,122 @@
+#include <stdio.h>
+#include <string.h>
+#define Non_trouve -1
+
+void conv_maj(char chaine[]);
+int recherche(char nom_rech[]);
+char tab_villes[16][16];
+
+main()
+
+{
+	int cpt, numero, res=0, choix, nb_personnes;
+	char villeA[20], villeD[20], villes[16];
+	FILE *F1;
+	
+	printf("Bonjour, merci d'utiliser notre application de reservations de billet d'avion \n");
+	printf ("\n");
+	printf ("Souhaitez-vous un billet aller-retour ou un billet simple ? (tapez 1 ou 2)\n");
+	printf ("\n");
+	while ((choix!=1)&&(choix!=2))
+	{
+		printf ("--1 Aller-Retour \n");
+		printf ("--2 Aller simple \n");
+		scanf("%d", &choix);
+		printf ("\n");
+	}
+	
+	printf("Veuillez nous faire part de votre ville de depart et votre ville d'arrivee \n");
+	
+	F1=fopen("villes.txt", "r");
+		
+	for (cpt=0; cpt<16; cpt++)
+	{
+		fscanf(F1,"%s", villes);
+		strcpy(tab_villes[cpt], villes);
+		printf("%s\n", tab_villes[cpt]);
+	}
+
+	fclose (F1);
+	printf ("\n");
+	printf ("Quelle est votre ville de depart: ");
+	scanf ("%s", villeD);
+	printf("\n");
+	conv_maj(villeD);
+	printf("%s", villeD);
+	printf("\n");
+	numero=recherche(villeD);
+	if (numero == Non_trouve)
+	{
+		printf ("Cette ville n'existe pas \n");
+		printf ("\n");
+	}
+	else
+	{
+		printf ("Ville de depart valide \n");
+		printf ("\n");
+	}
+	
+	printf ("Quelle est votre ville d'arrivee: ");
+	scanf("%s", villeA);
+	conv_maj(villeA);
+	printf("\n");
+	numero=recherche(villeA);
+	if (numero == Non_trouve)
+	{
+		printf ("Cette ville n'existe pas \n");
+	}
+	else
+	{
+		printf ("Ville d'arrivee valide \n");
+	}
+	
+	res=strcmp(villeA,villeD);
+	if (res==0)
+	{
+		printf("Impossible: La ville de depart doit etre differente de la ville d'arrivee \n");
+	}
+	
+	printf("\n");
+	
+	while ((nb_personnes<1)&&(nb_personnes>10))
+	{
+		printf("Cette reservation concerne combien de personnes ? \n");
+		scanf ("%d", &nb_personnes);
+		printf("\n");
+		if ((nb_personnes<1)&&(nb_personnes>10))
+		{
+			printf("Desole, le nombre de personnes doit etre compris entre 1 et 10 !");
+		}
+	}
+	
+	
+}
+
+void conv_maj(char chaine[])
+{
+	int taille, cpt;
+	
+	taille=strlen(chaine);
+	for (cpt=0; cpt<taille; cpt++)
+	{
+		chaine[cpt]=toupper(chaine[cpt]);
+	}		
+}
+
+int recherche(char nom_rech[])
+{
+	int cpt, numcase=Non_trouve;
+	char ville[16];
+		
+	for (cpt=0; cpt<16; cpt++)
+		{
+			strcpy(ville,tab_villes[cpt]);
+			if (strcmp(ville,nom_rech)==0)
+			{
+				numcase=cpt;
+			}
+		}
+	
+	return numcase;
+}
+
